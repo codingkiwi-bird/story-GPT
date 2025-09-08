@@ -1,0 +1,414 @@
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* 수평 스크롤바 제거 */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #212121; /* 어두운 배경 */
+    color: #fff; /* 텍스트 색상 흰색 */
+}
+
+#story-box, #story-output {
+    width: 500px;
+    height: 600px;
+    padding: 30px;
+    background-color:rgba(0, 0, 0, 0.75);
+    border-radius: 15px; /* 부드러운 모서리 */
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 부드러운 그림자 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease-in-out; /* 박스 애니메이션 */
+    color: white; /* 텍스트가 배경 이미지와 구분되도록 색상 설정 */
+    overflow-y: auto;
+}
+
+#story-box {
+    position: relative;             /* 내부 정렬을 위해 relative 설정 */
+    justify-content: space-between;  /* 위쪽은 스토리, 아래쪽은 선택지 */
+    align-items: center;             /* 가로 중앙 정렬 */
+}
+
+
+
+#story-output {
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.8); /* 투명한 어두운 배경으로 텍스트를 돋보이게 */
+    text-align: left;
+    display: none;
+}
+
+/* story-content 스타일 */
+#story-content {
+    margin-bottom: 20px; /* 선택지와의 간격 */
+    font-size: 18px;
+    line-height: 1.5; /* 줄 간격 조정 */
+    text-align: left; /* 텍스트 왼짝 정렬 */
+}
+
+
+/* 제목 스타일 */
+h1 {
+    font-size: 25px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* 텍스트 그림자 */
+}
+
+/* 선택 박스 스타일 */
+.element-select {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+label {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    font-size: 11px; 
+    font-weight: bold;
+    border: 3px solid #493e28;
+    border-radius: 8px;
+    background-image: url('images/paper.jpg'); /* 준비한 이미지로 대체 */
+    background-size: cover; /* 이미지가 박스를 완전히 채우도록 */
+    background-position: center; /* 이미지 중심 표시 */
+    color: black;
+    transition: background-color 0.3s ease;
+}
+
+select:focus {
+    background-color: #5a5333c6; /* 포커스 시 밝아짐 */
+    outline: none;
+}
+
+/* 시작 버튼 */
+#start-button {
+    margin-top: 30px;
+    padding: 18px 36px;
+    background-color: #493e28;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+#start-button:hover {
+    background-color: #2a2418;
+    transform: translateY(-3px); /* 버튼을 살짝 위로 이동 */
+}
+
+#start-button:active {
+    transform: translateY(1px); /* 클릭 시 눌리는 효과 */
+}
+
+/* 선택지 버튼 */
+
+#choices-container {
+    width: 100%;                     /* story-box의 너비에 맞춤 */
+    display: flex;                   /* 플렉스 박스 설정 */
+    flex-direction: column;          /* 세로 정렬 */
+    justify-content: flex-end;       /* 하단에 맞춤 */
+    align-items: center;             /* 가로 중앙 정렬 */
+    padding-bottom: 20px;            /* 하단 여백 추가 */
+}
+
+
+.choice-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #493e28;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.choice-button:hover {
+    background-color: #2a2418;
+    transform: translateY(-3px);
+}
+
+.choice-button:active {
+    transform: translateY(1px); /* 클릭 시 눌리는 효과 */
+}
+
+/* 고정된 버튼 */
+.fixed-buttons {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 15px;
+    z-index: 1000;
+}
+.fixed-buttons button {
+    padding: 12px 24px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.fixed-buttons button:hover {
+    background-color: #a6a6a6;
+    color: rgb(0, 0, 0);
+    /* transform: translateY(-3px);  */
+}
+    
+/* .fixed-buttons button:active {
+    transform: translateY(1px); 
+} */
+
+/* 모달 창 스타일 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.5); /* 준비한 이미지로 대체 */
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 3px solid #000000;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.705); /* 준비한 이미지로 대체 */
+    font-weight: bold; /* 폰트 굵게 */
+    color: rgb(0, 0, 0);
+
+}
+
+
+.modal-content textarea {
+    height: 200px;
+    resize: vertical;
+}
+
+.submit-button,
+.close-button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.submit-button {
+    background-color: #28a745;
+    color: white;
+    margin-right: 10px; 
+}
+
+.submit-button:hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+}
+
+.submit-button:active {
+    transform: translateY(1px);
+}
+
+.close-button {
+    background-color: #d9534f;
+    color: white;
+}
+
+.close-button:hover {
+    background-color: #c9302c;
+    transform: translateY(-3px);
+}
+
+.close-button:active {
+    transform: translateY(1px);
+}
+
+/* 처음으로 버튼 스타일 */
+.restart-button {
+    display: inline-block;
+    width: 150px;               /* 버튼 너비 */
+    height: 50px;               /* 버튼 높이 */
+    font-size: 16px;            /* 글자 크기 */
+    padding: 10px 20px;         /* 내부 여백 */
+    margin: 10px;               /* 버튼 간 간격 */
+    text-align: center;         /* 텍스트 중앙 정렬 */
+    border: none;               /* 테두리 제거 */
+    border-radius: 8px;         /* 둥근 모서리 */
+    background-color: #c25225;  /* Restart 버튼 배경색 */
+    color: white;               /* Restart 버튼 글씨색 */
+    cursor: pointer;            /* 마우스 포인터 변경 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.restart-button:hover {
+    background-color: #a13c14; /* 마우스 올렸을 때 색상 변화 */
+    transform: translateY(-3px); /* 버튼을 살짝 위로 이동 */
+}
+
+.restart-button:active {
+    transform: translateY(1px); /* 클릭 시 눌리는 효과 */
+}
+
+/* Share 버튼 스타일 */
+.share-button {
+    display: inline-block;
+    width: 150px;               /* 버튼 너비 */
+    height: 50px;               /* 버튼 높이 */
+    font-size: 16px;            /* 글자 크기 */
+    padding: 10px 20px;         /* 내부 여백 */
+    margin: 10px;               /* 버튼 간 간격 */
+    text-align: center;         /* 텍스트 중앙 정렬 */
+    border: none;               /* 테두리 제거 */
+    border-radius: 8px;         /* 둥근 모서리 */
+    background-color: #28a745;  /* Share 버튼 배경색 */
+    color: white;               /* Share 버튼 글씨색 */
+    cursor: pointer;            /* 마우스 포인터 변경 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.share-button:hover {
+    background-color: #218838;
+    transform: translateY(-3px); /* 버튼을 살짝 위로 이동 */
+}
+
+.share-button:active {
+    transform: translateY(1px); /* 클릭 시 눌리는 효과 */
+}
+
+/* 버튼 정렬 컨테이너 */
+#story-output {
+    display: flex;              /* 플렉스 박스 설정 */
+    justify-content: center;    /* 버튼을 가로 중앙 정렬 */
+    align-items: center;        /* 세로 중앙 정렬 */
+    gap: 20px;                  /* 버튼 간격 설정 */
+    flex-wrap: wrap;            /* 필요 시 줄바꿈 */
+}
+
+/* 스토리 시작 텍스트 스타일 */
+.intro-text {
+    font-size: 60px; /* 글씨 크기 조정 */
+    animation: blink 1.5s infinite; /* 깜빡깜빡하는 효과 추가 */
+    }
+    
+    /* 깜빡이는 애니메이션 효과 */
+    @keyframes blink {
+    0%, 100% {
+    opacity: 1; /* 완전 불투명 */
+    }
+    50% {
+    opacity: 0; /* 완전 투명 */
+    }
+    }
+
+    /* 메인 콘텐츠 설정 */
+    .main-content {
+        color: white;
+        text-align: center;
+        padding: 30px 20px 20px; /* 상단 60px, 좌우 20px, 하단 80px */
+        background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+        border-radius: 10px; /* 모서리 둥글게 */
+        margin: 50px auto; /* 상하 50px 여백 */
+        max-width: 800px; /* 최대 너비 */
+    }
+
+    /* 전체 배경 이미지 설정 */
+body {
+    background-image: url('images/main.jpg'); /* 이미지 경로 */
+    background-size: cover; /* 화면에 맞게 배경 크기 조정 */
+    background-position: center; /* 이미지 가운데 정렬 */
+    background-repeat: no-repeat; /* 배경 반복 방지 */
+    background-attachment: fixed; /* 스크롤 시 배경 고정 */
+    margin: 0;
+    font-family: Arial, sans-serif; /* 폰트 설정 */
+}
+
+
+/* 기본 input 스타일 */
+input[type="text"], input[type="input"] {
+    width: 300px; /* 너비 */
+    height: 40px; /* 높이 */
+    padding: 10px; /* 내부 여백 */
+    font-size: 16px; /* 글자 크기 */
+    font-weight: bold;
+    color: black; /* 글자 색 */
+    border: 3px solid #000000;
+    background-color: rgba(255, 255, 255, 0.701); 
+    border-radius: 8px; /* 둥근 모서리 */
+    outline: none; /* 클릭 시 나타나는 기본 윤곽 제거 */
+    transition: all 0.3s ease; /* 애니메이션 효과 */
+}
+
+.intro-text {
+    display: block;
+    text-align: center; /* 텍스트를 가로로 가운데 정렬 */
+    margin-bottom: 10px; /* 필요시 여백 추가 */
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; /* 로딩 GIF의 높이를 조정하고, 필요시 추가 스타일을 수정 */
+}
+
+.loading-gif {
+    width: 100px;  /* GIF 크기를 줄입니다. 필요시 값 조정 */
+    height: auto;  /* 비율에 맞춰 높이를 자동으로 조정 */
+}
+
+.title {
+    font-size: 20pt;
+}

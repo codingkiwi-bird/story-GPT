@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스토리</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="story-box">
+        <h1>미래의 내가 타임머신을 타고 <br>과거의 나에게 다가왔다 </h1>
+        <div id="story-elements"></div>
+        <button id="start-button">시작</button>
+    </div>
+
+    <div id="story-output" style="display: none;">
+        <div id="story-content"></div>
+        <div id="choices-container"></div>
+    </div>
+    <div id="post-container" style="display: none;"></div>
+
+    <div class="fixed-buttons">
+        <button onclick="window.location.href='/'">스토리</button> 
+        <button onclick="window.location.href='/board'">게시판</button>
+    </div>
+    
+    <script type="module" src="api.js"></script>
+    <script type="module" src="elements.js"></script>
+    <script type="module">
+    </script>
+    <script type="module" src="choices.js"></script>
+    <script src="editboard.js"></script>
+
+</body>
+</html>
